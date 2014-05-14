@@ -17,3 +17,7 @@ APP_ROOT=File.dirname(__FILE__)
 #look at and search the specified file i.e. here "guide.rb"  
 $:.unshift(File.join(APP_ROOT,'lib'))
 require 'guide'
+
+
+guide =Guide.new('restaurants.txt')
+guide.launch!
