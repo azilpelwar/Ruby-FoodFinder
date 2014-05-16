@@ -1,7 +1,19 @@
+require 'restaurant'
 class Guide
 
 	def initialize(path=nil)
 			#locate the restraunt text file at path
+			Restaurant.filepath = path 
+
+			if Restaurant.file_exists?
+				puts "Found Restaurant file."
+			elsif Restaurant.create_file
+				puts "Created restaurant file."
+			else
+				puts "Exiting \n \n"
+				exit!		#exit the application -ruby command
+			end
+					
 			#or create a new file
 			#exit if create fails
 	end	
@@ -21,7 +33,7 @@ class Guide
 	end
 
 	def conclusion
-		puts "\n Good BYe and Bon Apetit!!!\n"
+		puts "\n Good Bye and Bon Apetit!!!\n"
 	end
 
 end
