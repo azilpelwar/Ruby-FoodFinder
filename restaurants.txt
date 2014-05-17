@@ -1,2 +1,4 @@
 Maharaja	Mix Veg	20
 New Maharaja	Mexican	45
+new indian	pani puri	12
+new mexican	pizza	35
