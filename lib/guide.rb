@@ -20,14 +20,13 @@ class Guide
 	def launch!
 		introduction 
 		#action loop
-		loop do
+		result = nil
+		until result == :quit
 			# 	what do you want to do? (list, find, add, exit)
 			print "> "
 			user_response=gets.chomp		#get the user response and chomps the line return from input
 			#	do that action
 			result = do_action(user_response)
-			#repeat until user quits
-			break if result==:quit   		# :quit is a symbol represent the static variable kind behaviour 
 		end
 		conclusion
 	end
