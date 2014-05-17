@@ -5,7 +5,7 @@ class Guide
 		@@actions=['list','find','add','quit']
 		def self.actions; @@actions; end	# ; is used for defining the 'def' at single line
 	end
-	def initialize(path=nil)
+	def initialize(path=nil)			# it is like aconstructor in java
 			#locate the restraunt text file at path
 			Restaurant.filepath = path 
 
@@ -62,17 +62,9 @@ class Guide
 
 	def add 
 		puts "\n Add a restaurant \n \n".upcase
-		restaurant =Restaurant.new
-
-		print "Restaurant Name: "
-		restaurant.name = gets.chomp.strip
-
-		print "Cuisine Type: "
-		restaurant.cuisine = gets.chomp.strip
-
-		print "Average Price: "
-		restaurant.price = gets.chomp.strip
-
+		
+		restaurant =Restaurant.build_using_questions
+		
 		 if restaurant.save
 			puts "\n Restaurant Added \n"
 		 else
