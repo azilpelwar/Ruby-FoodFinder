@@ -37,8 +37,15 @@ class Restaurant
 	end
 
 	def self.saved_restaurants
-		#read teh restaurant file 
-		#return the instances of restaurant
+		restaurants=[]
+		if file_usable?
+			file=File.new(@@filepath,'r')
+			file.each_line do |line|
+				restaurants << Restaurant.new.import_line(line.chomp)
+			end
+		end
+		file.close
+		return restaurants
 	end
 
 	def self.build_using_questions
@@ -56,14 +63,19 @@ class Restaurant
 	
 	end
 
+
+
 	def initialize(args={})		#it is like a constructor in java
 		@name    = args[:name]    || ""
 		@cuisine = args[:cuisine] || ""
 		@price   = args[:price]   || ""
-
-
 	end
 
+	def import_line(line)
+		line_array=line.split("\t")
+		@name, @cuisine, @price=line_array			#assigns the [0]th value to name,[1]th value to cuisine and [2]nd value to price
+		return self				#this is IMP to return the object, if we dont return then it wont get assigned into method call obejct[Observe the def call to understand] 
+	end
 	 
 	def save
 		return false unless Restaurant.file_usable?
@@ -72,5 +84,4 @@ class Restaurant
 		end
 		return true
 	end
-
 end
