@@ -27,8 +27,8 @@ class Guide
 		#action loop
 		result = nil
 		until result == :quit
-			action =get_action
-			result = do_action(action)
+			action, args =get_action
+			result = do_action(action, args)
 		end
 		conclusion
 	end
@@ -40,17 +40,19 @@ class Guide
 			puts "Actions: " + Guide::Config.actions.join(", ") if action
 			print "> "
 			user_response=gets.chomp		#get the user response and chomps the line return from input
-			action=user_response.downcase.strip
+			args=user_response.downcase.strip.split(' ')
+			action =args.shift 				#"shift" removes the first element from the array
 		end
-			return action
+			return action, args				#even if it return 2 values, ruby internally converts the 2 retun values to the array and then returns
 	end 
 
-	def do_action(action)
+	def do_action(action, args=[])
 		case action
 		when 'list'
 			list
 		when 'find'
-			puts "Finding the items..."
+			keyword = args.shift
+			find(keyword)
 		when 'add'
 			add
 		when 'quit'
@@ -58,6 +60,23 @@ class Guide
 			return :quit
 		else
 			puts "\n Unrecognised Command!!\n"
+		end
+	end
+
+	def find(keyword="")
+		output_action_header ("Find a restaurant")
+		if keyword 
+			#search
+			restaurants = Restaurant.saved_restaurants
+			found=restaurants.select do |rest|
+				rest.name.downcase.include?(keyword.downcase) || 
+				rest.cuisine.downcase.include?(keyword.downcase) || 
+				rest.price.to_i <= keyword.to_i
+			end
+			output_restaurant_table (found)
+		else
+			puts "Find using a key pharse to search the restaurant list."
+			puts "Exs. 'find tamale', 'find indian' \n\n"
 		end
 	end
 
