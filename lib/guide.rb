@@ -20,10 +20,32 @@ class Guide
 	def launch!
 		introduction 
 		#action loop
-		# 	what do you want to do? (list, find, add, exit)
-		#	do that action
-		#repeat until user quits 
+		loop do
+			# 	what do you want to do? (list, find, add, exit)
+			print "> "
+			user_response=gets.chomp		#get the user response and chomps the line return from input
+			#	do that action
+			result = do_action(user_response)
+			#repeat until user quits
+			break if result==:quit   		# :quit is a symbol represent the static variable kind behaviour 
+		end
 		conclusion
+	end
+
+	def do_action(action)
+		case action
+		when 'list'
+			puts "Listing the items..."
+		when 'find'
+			puts "Finding the items..."
+		when 'add'
+			puts "Adding the item..."
+		when 'quit'
+			puts "Quitting..."
+			return :quit
+		else
+			puts "\n Unrecognised Command!!\n"
+		end
 	end
 
 	def introduction
@@ -33,6 +55,7 @@ class Guide
 
 	def conclusion
 		puts "\n Good Bye and Bon Apetit!!!\n"
+
 	end
 
 end
